@@ -1,0 +1,54 @@
+.user-rating {
+  width: 300px;
+  padding: 0;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.movie-image {
+  width: 80px;
+  height: 120px;
+  background-image: linear-gradient(grey, white);
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.details {
+  padding: 1em;
+}
+
+.rating-icon {
+  vertical-align: bottom;
+}
+
+.more-button {
+  margin-top: -1em;
+}
+
+.space{
+  flex: 1;
+  min-width: 300px;
+  max-width: 300px;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 400px;
+  flex: 1;
+  padding: 3em;
+}
+
+.mat-title {
+  margin-bottom: 1.5em;
+}
+
+.button-container {
+  margin-top: 2em;
+}

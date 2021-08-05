@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Edit Rating</h1>
+<div mat-dialog-content fxLayout="column">
+  <p>Change your rating for <em>{{data.movieName}}</em>.</p>
+  <mat-form-field style="margin-top: 1em; margin-bottom: 1em;">
+    <mat-label>Rating</mat-label>
+    <input matInput [(ngModel)]="data.rating" type="number" min="1" max="10" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between" style="margin-bottom:0.25em;">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="data.rating" color="primary">Save</button>
+</div>

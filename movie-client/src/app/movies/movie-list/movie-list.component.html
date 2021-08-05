@@ -1,0 +1,23 @@
+<h2 class="mat-title app-title">Movies</h2>
+<div class="content">
+    <div fxLayout="row wrap" fxLayoutGap="25px grid">
+        <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let movie of data">
+            <mat-card  class="mat-elevation-z4 scrollable-content">
+                <mat-card-header style="overflow: hidden;">
+                    <mat-card-title><div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{movie.name}}</div></mat-card-title>
+                </mat-card-header>
+                <img mat-card-image height='250px' [src]='movie.cover'>
+                <mat-card-content>
+                    <p>
+                    {{movie.description}}
+                    </p>
+                </mat-card-content>
+                <hr>
+                <mat-card-actions>
+                    <span *ngIf="(authenticated$ | async);">Your rating: <span *ngIf='movie.rating'>{{movie.rating.rating}}/10</span> <i *ngIf="!movie.rating">unrated</i> <br> </span>
+                    <button style='text-align: right;' mat-button [routerLink]="[movie.id]" [queryParams]="{id: movie.id, name: movie.name, description: movie.description}">See Ratings & More</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>    
+    </div>
+</div>

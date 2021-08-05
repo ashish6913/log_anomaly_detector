@@ -1,0 +1,42 @@
+<ng-container *ngIf="userRatings$ | async as userRatings">
+    <ng-container *ngIf="userRatings.length > 0; else emptyBlock" >
+        <h2 class="mat-title app-title">Your Ratings</h2>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+            <mat-card class="user-rating" *ngFor="let userRating of userRatings" fxLayout="row">
+                <div class="movie-image"></div>
+                <div class="details" fxFlex>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <h3><strong>{{userRating?.movie?.name}}</strong></h3>
+                        <div>
+                            <button mat-icon-button aria-label="options" class="more-button" [matMenuTriggerFor]="optionsMenu" >
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+
+                            <mat-menu #optionsMenu="matMenu">
+                                <a mat-menu-item aria-label="Edit" (click)="onEdit(userRating)">Edit</a>
+                                <mat-divider></mat-divider>
+                                <a mat-menu-item aria-label="Delee" (click)="onDelete(userRating?.rating?.id)">Delete</a>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div>
+                        <mat-icon class="rating-icon">star_rate</mat-icon>
+                        {{userRating?.rating?.rating}}/10
+                    </div>
+                </div>
+            </mat-card>
+            <div *ngFor="let box of [0,1,2,3,4,5]" class="space"></div>
+        </div>
+    </ng-container>
+    <ng-template #emptyBlock>
+        <div fxLayoutAlign="center">
+            <mat-card class="container" fxLayout="column">
+                <h2 fxFlex fxLayoutAlign="center" class="mat-title">Your Ratings</h2>
+                <p fxLayoutAlign="center">Rate movies to see your ratings here.</p>
+                <div fxLayoutAlign="center" class="button-container">
+                    <a mat-raised-button color="primary" routerLink="/movies" aria-label="See Movies">See Movies</a>
+                </div>
+            </mat-card>
+        </div>
+    </ng-template>
+</ng-container>

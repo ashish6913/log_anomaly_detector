@@ -1,0 +1,97 @@
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
+    container_name: elasticsearch
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector
+    container_name: jaeger-collector
+    restart: on-failure
+    networks:
+      - main-net
+    environment:
+      - SPAN_STORAGE_TYPE=kafka
+      - KAFKA_PRODUCER_BROKERS=broker:29092
+      - KAFKA_PRODUCER_ENCODING=json
+      - KAFKA_PRODUCER_TOPIC=jaeger-spans
+
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent
+    container_name: jaeger-agent
+    restart: on-failure
+    command: ["--reporter.grpc.host-port=jaeger-collector:14250"]
+    networks:
+      - main-net
+    ports:
+      - "6831:6831/udp"
+    depends_on:
+      - jaeger-collector
+
+  jaeger-ingester:
+    image: jaegertracing/jaeger-ingester
+    container_name: jaeger-ingester
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "14270:14270" # HTTP health check port: http://localhost:14270/
+      - "14271:14271" # Metrics port: http://localhost:14270/metrics
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://elasticsearch:9200
+      - KAFKA_CONSUMER_ENCODING=json
+      - KAFKA_CONSUMER_BROKERS=broker:29092
+      - KAFKA_CONSUMER_TOPIC=jaeger-spans
+    depends_on:
+      - elasticsearch
+
+  jaeger-query:
+    image: jaegertracing/jaeger-query
+    container_name: jaeger-query
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "16686:16686" # Jaeger UI port
+      - "16687:16687" # HTTP health check port: http://localhost:16687/
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  zipkin:
+    image: openzipkin/zipkin:2
+    networks:
+      - main-net
+    ports:
+      - "9411:9411"
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.28.0
+    networks:
+      - main-net
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "55681:55681"
+      - "55679:55679"
+    
+    
+
+      
+networks:
+  main-net:
+    driver: bridge
+    name: main-net

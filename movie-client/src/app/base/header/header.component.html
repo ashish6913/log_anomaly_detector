@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="mat-headline">Movie Catalog</span>
+    <span fxFlex></span>
+  
+    <a mat-button routerLink="/movies" aria-label="Movies">Movies</a>
+    <a mat-button routerLink="/auth/login" aria-label="Login" *ngIf="!(authenticated$ | async); else elseBlock">Login</a>
+    
+    <ng-template #elseBlock>
+      <button mat-button [matMenuTriggerFor]="menu" aria-label="User menu">
+        <mat-icon>account_circle</mat-icon>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item routerLink="/ratings" aria-label="Your ratings">Your Ratings</a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item routerLink="/auth/logout" aria-label="Logout">Logout</a>
+      </mat-menu>
+    </ng-template>
+  </mat-toolbar-row>
+  
+  <mat-toolbar-row class="header-extender"></mat-toolbar-row>
+</mat-toolbar>

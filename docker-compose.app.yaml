@@ -1,0 +1,163 @@
+version: "3.9"
+
+services:
+  discovery:
+    build:
+      context: ./discovery-server
+      dockerfile: ../Dockerfile
+    container_name: discovery
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8761:8761"
+    environment:
+      - JAEGER_AGENT_HOST=jaeger-agent
+
+  comments:
+    build:
+      context: ./comments
+      dockerfile: ../Dockerfile
+    container_name: comments
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8087:8087"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=comments-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database 
+    depends_on:
+      - discovery
+      - comments-db    
+
+  movie-catalog:
+    build:
+      context: ./movie-catalog-service
+      dockerfile: ../Dockerfile
+    container_name: movie-catalog
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+    depends_on:
+      - discovery
+
+  movie-info:
+    build:
+      context: ./movie-info-service
+      dockerfile: ../Dockerfile
+    container_name: movie-info
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=movie-info-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database
+    depends_on:
+      - discovery
+      - movie-info-db
+
+  ratings-data:
+    build:
+        context: ./ratings-data-service
+        dockerfile: ../Dockerfile
+    container_name: ratings-data
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8083:8083"   
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=ratings-data-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database
+    depends_on:
+      - discovery
+      - ratings-data-db
+  
+  movie-info-db:
+    image: postgres:13.3-alpine
+    container_name: movie-info-db
+    restart: on-failure
+    networks:
+      - main-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    volumes:
+      - ./movie-info-service/db:/docker-entrypoint-initdb.d
+
+  ratings-data-db:
+    image: postgres:13.3-alpine
+    container_name: ratings-data-db
+    restart: on-failure
+    networks:
+      - main-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    volumes:
+      - ./ratings-data-service/db:/docker-entrypoint-initdb.d
+    restart: on-failure
+
+  comments-db:
+    image: postgres:13.3-alpine
+    container_name: comments-db
+    restart: on-failure
+    networks:
+      - main-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    volumes:
+      - ./comments/db:/docker-entrypoint-initdb.d
+  
+  # movie-client:
+  #   build: 
+  #     context: ./movie-client
+  #   container_name: movie-client
+  #   restart: on-failure
+  #   networks:
+  #     - main-net
+  #   command: /home/nginx/nginx-init.sh
+  #   ports:
+  #     - "4200:80"
+  #   environment:
+  #     # It says URI but don't include the scheme... So the format should be "host:port"
+  #     - MOVIE_CATALOG_SERVICE_URI=movie-catalog:8082
+  #     - MOVIE_INFO_SERVICE_URI=movie-info:8081
+  #     - RATINGS_DATA_SERVICE_URI=ratings-data:8083
+  #     - JAEGER_AGENT_URI=jaeger-agent:6831
+  #   depends_on:
+  #     - movie-catalog
+  #     - movie-info
+  #     - ratings-data
+
+
+  
+networks:
+  main-net:
+    driver: bridge
+    name: main-net
+    

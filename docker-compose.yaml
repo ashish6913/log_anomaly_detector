@@ -1,0 +1,151 @@
+version: "3.9"
+
+services:
+
+  discovery:
+    build:
+      context: ./discovery-server
+      dockerfile: ../Dockerfile
+    networks:
+      - frontend-net
+    ports:
+      - "8761:8761"
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+    restart: on-failure
+
+  movie-catalog:
+    build:
+      context: ./movie-catalog-service
+      dockerfile: ../Dockerfile
+    networks:
+      - frontend-net
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger
+    depends_on:
+      - discovery
+      - jaeger
+    restart: on-failure
+
+  movie-info:
+    build:
+      context: ./movie-info-service
+      dockerfile: ../Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - frontend-net
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger
+      - DB_HOST=movie-info-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database
+    depends_on:
+      - discovery
+      - movie-info-db
+      - jaeger
+    restart: on-failure
+
+  ratings-data:
+    build:
+        context: ./ratings-data-service
+        dockerfile: ../Dockerfile
+    networks:
+      - frontend-net
+    ports:
+      - "8083:8083"   
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger
+      - DB_HOST=ratings-data-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database
+    depends_on:
+      - discovery
+      - ratings-data-db
+      - jaeger
+    restart: on-failure
+  
+  movie-info-db:
+    image: postgres:13.3-alpine
+    networks:
+      - frontend-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    volumes:
+      - ./movie-info-service/db:/docker-entrypoint-initdb.d
+    restart: on-failure
+
+  ratings-data-db:
+    image: postgres:13.3-alpine
+    networks:
+      - frontend-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    volumes:
+      - ./ratings-data-service/db:/docker-entrypoint-initdb.d
+    restart: on-failure
+  
+  jaeger:
+    image: jaegertracing/all-in-one:1.22.0
+    networks:
+      - frontend-net
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    restart: on-failure
+
+  # Comment in or out to exclude/inlude this service
+  movie-client:
+    build: 
+      context: ./movie-client
+    command: /home/nginx/nginx-init.sh
+    ports:
+      - "4200:80"
+    networks:
+      - frontend-net
+    environment:
+      # It says URI but don't include the scheme... So the format should be "host:port"
+      - MOVIE_CATALOG_SERVICE_URI=movie-catalog:8082
+      - MOVIE_INFO_SERVICE_URI=movie-info:8081
+      - RATINGS_DATA_SERVICE_URI=ratings-data:8083
+      - JAEGER_AGENT_URI=jaeger:6831
+    depends_on:
+      - movie-catalog
+      - movie-info
+      - ratings-data
+
+  zipkin:
+    image: openzipkin/zipkin:2
+    networks:
+      - frontend-net
+    ports:
+      - "9411:9411"
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.28.0
+    networks:
+      - frontend-net
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "55681:55681"
+      - "55679:55679"
+      
+networks:
+  frontend-net:
+    driver: bridge
+    name: frontend-net
+
+  

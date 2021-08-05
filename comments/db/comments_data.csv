@@ -1,0 +1,6 @@
+USER_ID,MOVIE_ID,DESCRIPTION
+1,2,comment one.
+2,3,comment two.
+2,2,comment three.
+2,1,comment four.
+3,1,comment five.
