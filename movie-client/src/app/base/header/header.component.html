@@ -4,8 +4,13 @@
     <span fxFlex></span>
   
     <a mat-button routerLink="/movies" aria-label="Movies">Movies</a>
-    <a mat-button routerLink="/auth/login" aria-label="Login" *ngIf="!(authenticated$ | async); else elseBlock">Login</a>
+    <!-- <a mat-button routerLink="/auth/admin" aria-label="Login"*ngIf="(authenticated$ | async) && (admin$ | async)">Admin Board</a> -->
+    <div *ngIf="(authenticated$ | async)">
+      <a mat-button routerLink="/auth/admin" aria-label="Login"*ngIf="(admin$ | async)">Admin Board</a>
+  </div>
     
+    <a mat-button routerLink="/auth/login" aria-label="Login" *ngIf= "!(authenticated$ | async); else elseBlock">Login</a>
+    <a mat-button routerLink="/auth/register" aria-label="Register" *ngIf= "!(authenticated$ | async);">Register</a>
     <ng-template #elseBlock>
       <button mat-button [matMenuTriggerFor]="menu" aria-label="User menu">
         <mat-icon>account_circle</mat-icon>

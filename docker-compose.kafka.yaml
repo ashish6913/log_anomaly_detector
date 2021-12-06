@@ -96,6 +96,9 @@ services:
       - |
         echo "Installing Connector"
         confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:latest
+        confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:10.2.2
+        confluent-hub install --no-prompt hpgrahsl/kafka-connect-mongodb:1.1.0 
+        confluent-hub install --no-prompt jcustenborder/kafka-connect-json-schema:0.2.5
         #
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run &

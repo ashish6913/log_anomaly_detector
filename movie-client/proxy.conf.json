@@ -8,6 +8,24 @@
       "^/api/movies/*": "http://localhost:8081/movies/"
     }
   },
+  "/api/login/*": {
+    "target":"http://localhost:8089/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/login/*": "http://localhost:8089/api/auth/signin"
+    }
+  },
+  "/api/register/*": {
+    "target":"http://localhost:8089/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/login/*": "http://localhost:8089/api/auth/register"
+    }
+  },
   "/api/ratings/*": {
     "target":"http://localhost:8083/",
     "secure": false,

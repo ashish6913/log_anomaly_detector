@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  predicted_dash:
+    build:
+      context: ./dashboard
+      dockerfile: ../Dockerfile
+    container_name: dashboard
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8092:8092"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=ml-db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=database_ml
+  
+networks:
+  main-net:
+    driver: bridge
+    name: main-net
+    

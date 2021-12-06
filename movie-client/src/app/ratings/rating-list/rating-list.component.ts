@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RatingEditDialogComponent } from 'src/app/shared/components/rating-edit-dialog/rating-edit-dialog.component';
 import { RatingsService } from 'src/app/core/ratings.service';
 import { first } from 'rxjs/operators';
+import { TokenStorageService } from 'src/app/core/token-storage.service';
 
 @Component({
   selector: 'app-rating-list',
@@ -14,7 +15,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./rating-list.component.css']
 })
 export class RatingListComponent implements OnInit {
-
+  public userId;
   userRatings$: Observable<any[]>;
 
   constructor(
@@ -22,22 +23,25 @@ export class RatingListComponent implements OnInit {
     private catalogService: CatalogService,
     private ratingsService: RatingsService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private token:TokenStorageService
   ) { 
-    this.userRatings$ = catalogService.getUserMovieRatings(authSerivce.userId);
+    
+    this.userId = token.getUser().id;
+    this.userRatings$ = catalogService.getUserMovieRatings(this.userId);
   }
 
   ngOnInit(): void {
   }
 
   refreshRatingsList() {
-    this.userRatings$ = this.catalogService.getUserMovieRatings(this.authSerivce.userId);
+    this.userRatings$ = this.catalogService.getUserMovieRatings(this.userId);
   }
 
   onEdit(userRating: any){
 
     const ratingId = userRating.rating.id;
-    const userId = this.authSerivce.userId;
+    const userId =this.userId;
     const movieId = userRating.movie.id;
     const movieName = userRating.movie.name;
     const rating = userRating.rating.rating;

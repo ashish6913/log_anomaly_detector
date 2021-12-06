@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+#   discovery:
+#     build:
+#       context: ./discovery-server
+#       dockerfile: ../Dockerfile
+#     container_name: discovery
+#     restart: on-failure
+#     networks:
+#       - main-net
+#     ports:
+#       - "8761:8761"
+#     environment:
+#       - JAEGER_AGENT_HOST=jaeger-agent
+
+  login_logout:
+    build:
+      context: ./logout
+      dockerfile: ../Dockerfile
+    container_name: login_logout
+    restart: on-failure
+    networks:
+      - main-net2
+    ports:
+      - "8089:8089"
+    environment:
+    #   - EUREKA_SERVER=http://discovery:8761/eureka
+    #   - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=login_logout-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database 
+    depends_on:
+    #   - discovery
+      - login_logout-db    
+
+  login_logout-db:
+    image: postgres
+    container_name: login_logout-db 
+    restart: on-failure
+    networks:
+      - main-net2
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    ports:
+      - "5436:5432"
+    # volumes:
+    #   - ./logout/db:/docker-entrypoint-initdb.d
+
+
+  pgadmin:
+    container_name: pgadmin4_container2
+    image: dpage/pgadmin4
+    restart: always
+    networks:
+      - main-net2
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5051:80"
+
+networks:
+  main-net2:
+    driver: bridge
+    name: main-net2

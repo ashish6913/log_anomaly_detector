@@ -1,1 +1,5 @@
 target/
+movie-client/angular.json
+log-generators/.ipynb_checkpoints/
+log-generators/geckodriver.log
+ml/.ipynb_checkpoints/

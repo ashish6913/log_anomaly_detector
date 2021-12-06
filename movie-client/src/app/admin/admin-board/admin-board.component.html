@@ -1,0 +1,17 @@
+<mat-card style="width: calc(100% - 70px); height: calc(100% - 70px);">
+    <h2 class="mat-card-title">Dashboard</h2>
+    
+    <label for="start">Start date:</label>
+    <input type="date" id="start" name="start" value="2021-10-20" min="2018-01-01" max="2024-12-31" #start>
+
+    <span style="display:inline-block; width:3%;"></span>
+    <label for="end">End date:</label>
+    <input type="date" id="end" name="end" value="2021-10-20" min="2018-01-01" max="2024-12-31" #end>
+
+    <span style="display:inline-block; width:3%;"></span>
+
+    <button type="button" (click)='update_stacked_chart(start.value,end.value)'>Submit</button>
+    
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz"></div>
+</mat-card>

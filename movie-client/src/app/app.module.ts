@@ -8,10 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BaseModule } from './base/base.module';
 import { CoreModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { authInterceptorProviders } from './auth/auth.interceptor';
+// import { AdminBoardComponent } from './admin/admin-board/admin-board.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    // AdminBoardComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     BaseModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
 import { CatalogService } from "src/app/core/catalog.service";
 import { Rating } from 'src/app/rating';
+import { TokenStorageService } from 'src/app/core/token-storage.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -14,14 +15,16 @@ import { Rating } from 'src/app/rating';
 })
 
 export class MovieListComponent implements OnInit {
-  
   authenticated$: Observable<boolean>;
   data: Array<Movie>;
   ratingsData: Array<any>
   ratings: Array<Rating>
+  userVal : any
 
-  constructor(private movieService:MoviesService, private authService: AuthService, private router: Router, private catalogueService: CatalogService) { 
-    this.authenticated$ = authService.authenticated$;
+  constructor(private movieService:MoviesService, private authService: AuthService, private router: Router, private catalogueService: CatalogService, private tokenStorage: TokenStorageService ) { 
+    this.authenticated$ = tokenStorage.authenticated$;
+    this.userVal = this.tokenStorage.getUser();
+    // tokenStorage.getUser(S);
     this.data=[];
     this.ratingsData=[];
     this.ratings=[]
@@ -40,8 +43,8 @@ export class MovieListComponent implements OnInit {
                                                                   this.data=response._embedded.data
                                                                   this.selectRandomCovers();
                                                                 });
-    if(this.authenticated$){                                                     
-      this.catalogueService.getUserMovieRatings(this.authService.userId).subscribe((response) =>  { 
+    if(this.userVal){                                                     
+      this.catalogueService.getUserMovieRatings(this.tokenStorage.getUser().id).subscribe((response) =>  { 
                                                                     this.ratingsData=response;
                                                                     //we join the arrays so we can display a user's ratings on the card
                                                                     //performance could later be improved by doing this differently
