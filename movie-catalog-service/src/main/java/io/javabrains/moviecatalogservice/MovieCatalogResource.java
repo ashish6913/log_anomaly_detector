@@ -35,7 +35,7 @@ public class MovieCatalogResource {
     public CollectionModel<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
 
         ResponseEntity<CollectionModel<EntityModel<UserRating>>> ratingsHttpResponse = restTemplate.exchange(
-            "http://ratings-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/ratings/users/" + userId,
+            "http://ratings-micro/ratings/users/" + userId,
             HttpMethod.GET,
             null,
             new ParameterizedTypeReference<CollectionModel<EntityModel<UserRating>>>(){});
@@ -47,7 +47,7 @@ public class MovieCatalogResource {
                 UserRating rating = ratingEntityModel.getContent();
 
                 ResponseEntity<EntityModel<Movie>> movieHttpResponse = restTemplate.exchange(
-                    "http://movie-info-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/movies/" + rating.getMovieId(),
+                    "http://movie-info-micro/movies/" + rating.getMovieId(),
                     HttpMethod.GET,
                     null,
                     new ParameterizedTypeReference<EntityModel<Movie>>(){});
