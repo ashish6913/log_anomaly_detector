@@ -26,7 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-@RequestMapping("predicted_values")
+@RequestMapping("/predicted_values")
 public class DashboardResource {
 
     private final DashboardRepository repository;
