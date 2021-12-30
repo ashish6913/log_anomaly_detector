@@ -39,7 +39,7 @@ public class DashboardResource {
     }
 
     
-    @GetMapping("")
+    @GetMapping("/")
     public CollectionModel<EntityModel<Dashboard>> getAllPredictedData() {
         List<EntityModel<Dashboard>> predicted_values = repository.findAll().stream()
             .map(assembler::toModel)
@@ -48,7 +48,7 @@ public class DashboardResource {
         return CollectionModel.of(predicted_values, linkTo(methodOn(DashboardResource.class).getAllPredictedData()).withSelfRel());
     }
 
-    @GetMapping("fromDate/{from}/toDate/{to}")
+    @GetMapping("/fromDate/{from}/toDate/{to}")
     public CollectionModel<EntityModel<Dashboard>> getPredictedDataFromTo(@PathVariable("from") String from,@PathVariable("to") String to) {
         String from_date = from.substring(from.length() - 2);
         String end_date = to.substring(to.length() - 2);
