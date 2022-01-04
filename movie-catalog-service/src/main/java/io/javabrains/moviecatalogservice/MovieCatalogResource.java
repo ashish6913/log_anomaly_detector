@@ -35,7 +35,7 @@ public class MovieCatalogResource {
     public CollectionModel<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
 
         ResponseEntity<CollectionModel<EntityModel<UserRating>>> ratingsHttpResponse = restTemplate.exchange(
-            "http://ratings-data-service/ratings/users/" + userId,
+            "http://ratings-micro-54d5dcdcdb-vngm8/ratings/users/" + userId,
             HttpMethod.GET,
             null,
             new ParameterizedTypeReference<CollectionModel<EntityModel<UserRating>>>(){});
