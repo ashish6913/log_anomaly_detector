@@ -2,8 +2,8 @@
   "name": "movie-client",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "npx install -g @angular/cli ng serve",
+    "ng": "npx ng",
+    "start": "npx ng serve",
     "build": "npx ng build",
     "watch": "npx ng build --watch --configuration development",
     "test": "npx ng test"
