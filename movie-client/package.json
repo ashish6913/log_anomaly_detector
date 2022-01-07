@@ -2,11 +2,11 @@
   "name": "movie-client",
   "version": "0.0.0",
   "scripts": {
-    "ng": "npx ng",
-    "start": "npx ng serve",
-    "build": "npx ng build",
-    "watch": "npx ng build --watch --configuration development",
-    "test": "npx ng test"
+    "ng": "ng",
+    "start": "npm start",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
