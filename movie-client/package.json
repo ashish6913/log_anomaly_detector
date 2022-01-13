@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm install -g && npm link && ng serve",
+    "start": "npm ci",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
