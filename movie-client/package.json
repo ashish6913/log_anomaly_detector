@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "prestart": "npm install && npm link @angular/cli",
-    "start": "npm i --only=dev && npx ng serve",
+    "start": "npm i --only=dev && npx ng serve --port 8080",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
