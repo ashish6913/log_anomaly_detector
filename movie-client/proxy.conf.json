@@ -5,7 +5,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/movies/*": "http://localhost:8081/movies/"
+      "^/api/movies/*": "http://movie-info-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/movies/"
     }
   },
   "/api/login/*": {
@@ -14,7 +14,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/login/*": "http://localhost:8089/api/auth/signin"
+      "^/api/login/*": "http://login-logout2-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/api/auth/signin"
     }
   },
   "/api/register/*": {
@@ -23,7 +23,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/login/*": "http://localhost:8089/api/auth/register"
+      "^/api/login/*": "http://login-logout2-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/api/auth/register"
     }
   },
   "/api/ratings/*": {
@@ -32,7 +32,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/ratings/*": "http://localhost:8083/ratings/"
+      "^/api/ratings/*": "http://ratings-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/ratings/"
     }
   },
   "/api/catalog/*": {
@@ -41,7 +41,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/catalog/*": "http://localhost:8082/catalog/"
+      "^/api/catalog/*": "http://movie-catalog-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/catalog/"
     }
   },
   "/api/comments/*": {
@@ -50,7 +50,7 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/comments/*": "http://localhost:8087/movie/"
+      "^/api/comments/*": "http://comments-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/movie/"
     }
   }
 }
