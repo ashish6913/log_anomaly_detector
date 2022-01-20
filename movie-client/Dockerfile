@@ -29,5 +29,5 @@ COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 RUN chmod -R +x /home/nginx
 # RUN /home/nginx/nginx-init.sh
 RUN cat /etc/nginx/nginx.conf
-EXPOSE 80
+EXPOSE 8080
 # CMD /home/nginx/nginx-init.sh
