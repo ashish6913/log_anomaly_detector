@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.server.ResponseStatusException;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+
+@CrossOrigin
 @RestController
 @RequestMapping("/predicted_values")
 public class DashboardResource {
