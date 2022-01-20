@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/movie/{movieId}/comments")
 public class CommentsResource {

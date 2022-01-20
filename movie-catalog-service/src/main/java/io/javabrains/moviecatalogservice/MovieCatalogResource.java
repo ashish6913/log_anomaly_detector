@@ -23,7 +23,9 @@ import org.springframework.web.client.RestTemplate;
 import models.CatalogItem;
 import models.Movie;
 import models.UserRating;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/catalog")
 public class MovieCatalogResource {
