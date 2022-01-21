@@ -1,6 +1,6 @@
 {
   "/api/movies/*": {
-    "target":"http://localhost:8081/",
+    "target":"http://movie-info-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -9,7 +9,7 @@
     }
   },
   "/api/login/*": {
-    "target":"http://localhost:8089/",
+    "target":"http://login-logout2-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -18,7 +18,7 @@
     }
   },
   "/api/register/*": {
-    "target":"http://localhost:8089/",
+    "target":"http://login-logout2-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -27,7 +27,7 @@
     }
   },
   "/api/ratings/*": {
-    "target":"http://localhost:8083/",
+    "target":"http://ratings-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -36,7 +36,7 @@
     }
   },
   "/api/catalog/*": {
-    "target":"http://localhost:8082/",
+    "target":"http://movie-catalog-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
@@ -45,7 +45,7 @@
     }
   },
   "/api/comments/*": {
-    "target":"http://localhost:8087/",
+    "target":"http://comments-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
