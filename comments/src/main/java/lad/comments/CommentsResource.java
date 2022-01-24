@@ -55,7 +55,8 @@ public class CommentsResource {
 
         return CollectionModel.of(comments, linkTo(methodOn(CommentsResource.class).getCommentsByUserId(userId)).withSelfRel());
     }
-
+    
+    @CrossOrigin
     @PostMapping("")
     public ResponseEntity<?> createNewComment(@PathVariable("movieId") int movieId, @RequestBody Comment newComment) {
         EntityModel<Comment> entityModel = assembler.toModel(repository.save(newComment));

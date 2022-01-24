@@ -21,6 +21,7 @@ export class CommentsService {
     }
 
     return this.http.post<any>(`/api/comments/${movieId}/comments`, createBody, this.httpOptions).pipe(
+      console.log(createBody),
       first(),
       catchError(e => throwError(e))
     )
