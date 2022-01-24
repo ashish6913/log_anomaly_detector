@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-const AUTH_API = 'http://localhost:8089/api/auth/';
+const AUTH_API = 'http://login-logout2-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/api/auth/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

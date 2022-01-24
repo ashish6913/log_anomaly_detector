@@ -16,7 +16,7 @@ export class AdminBoardComponent implements OnInit {
     update_stacked_chart(start: string, end: string){
       this.start = start;
       this.end = end;
-      const api_url = 'http://localhost:8092/predicted_values/fromDate/' + start + '/toDate/' + end;
+      const api_url = 'http://dashboard-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/predicted_values/fromDate/' + start + '/toDate/' + end;
       d3.json(api_url).then(data => this.process_log_data(data));
     }
 
