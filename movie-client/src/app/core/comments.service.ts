@@ -19,9 +19,12 @@ export class CommentsService {
     const createBody = {
       movieId, userId, description
     }
+    console.log(createBody);
+    console.log(movieId);
+    console.log("user id is "+ userId);
+    console.log("description is "+ description);
 
     return this.http.post<any>(`/api/comments/${movieId}/comments`, createBody, this.httpOptions).pipe(
-      console.log(createBody),
       first(),
       catchError(e => throwError(e))
     )
