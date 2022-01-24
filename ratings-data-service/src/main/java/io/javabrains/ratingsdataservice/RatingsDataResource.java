@@ -48,7 +48,7 @@ public class RatingsDataResource {
     }
 
     // Create rating
-    @PostMapping("")
+    @PostMapping(path= "", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createNewRating(@RequestBody UserRating newRating) {
         EntityModel<UserRating> entityModel = assembler.toModel(repository.save(newRating));
 
