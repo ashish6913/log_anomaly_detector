@@ -24,7 +24,7 @@ export class CommentsService {
     console.log("user id is "+ userId);
     console.log("description is "+ description);
 
-    return this.http.post<any>(`/api/comments/${movieId}/comments`, createBody, this.httpOptions).pipe(
+    return this.http.post<any>(`http://comments-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/movie/${movieId}/comments`, createBody, this.httpOptions).pipe(
       first(),
       catchError(e => throwError(e))
     )
