@@ -32,7 +32,7 @@ export class RatingsService {
       movieId, userId, rating
     }
 
-    return this.http.post<any>(`/api/ratings`, createBody, this.httpOptions).pipe(
+    return this.http.post<any>(`http://ratings-micro-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/ratings`, createBody, this.httpOptions).pipe(
       first(),
       catchError(e => throwError(e))
     )
