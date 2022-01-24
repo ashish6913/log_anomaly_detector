@@ -87,6 +87,7 @@ export class MovieComponent implements OnInit {
   }
 
   postComment() {
+    console.log("current comment is" + this.currentCommentText);
     this.commentsService.createComment(this.userId, this.movie.id, this.currentCommentText).subscribe((response) => {
       console.log(response);
       this.snackBar.open("Posted your comment.", "", {
