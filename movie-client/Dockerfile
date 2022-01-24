@@ -19,8 +19,8 @@ RUN npm ci --quiet -- --only=prod
 COPY . ./
 RUN npm run build -- --output-path=dist
 
-# FROM nginx:1.21.0-alpine
-FROM opentracing/nginx-opentracing:0.18.0
+FROM nginx:1.21.0-alpine
+# FROM opentracing/nginx-opentracing:0.18.0
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/nginx-init.sh /home/nginx/
 
