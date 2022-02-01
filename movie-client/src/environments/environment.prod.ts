@@ -18,7 +18,7 @@ export const environment = {
       exportTimeoutMillis: '30000', // How long the export can run before it is cancelled
     },
     otelcolConfig: {
-      url: 'http://otel-collector-headless:4317/v1/traces', //URL of opentelemetry collector
+      url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
       
     },
     jaegerPropagatorConfig: {
