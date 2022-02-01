@@ -1,14 +1,19 @@
 <mat-card class="container" fxLayout="column">
     <h2 fxFlex fxLayoutAlign="center" class="mat-title">Login</h2>
     <form fxFlex fxLayout="column" [formGroup]="loginForm" #f="ngForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
+        <!-- <mat-form-field>
           <mat-label>User ID</mat-label>
           <input matInput type="number" id="userId" formControlName="userId" required>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" id="username" formControlName="username" required>
         </mat-form-field>
-      
+
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput type="password" id="password" formControlName="password">
+          <input matInput type="password" id="password" formControlName="password" required>
         </mat-form-field>
 
         <div fxLayoutAlign="center" class="button-container">

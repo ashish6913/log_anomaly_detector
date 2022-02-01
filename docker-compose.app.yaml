@@ -14,6 +14,65 @@ services:
     environment:
       - JAEGER_AGENT_HOST=jaeger-agent
 
+  predicted_dash:
+    build:
+      context: ./dashboard
+      dockerfile: ../Dockerfile
+    container_name: dashboard
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8092:8092"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=ml-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database
+    depends_on:
+      - discovery
+      - ml-db   
+
+  login_logout:
+    build:
+      context: ./logout
+      dockerfile: ../Dockerfile
+    container_name: login_logout
+    restart: on-failure
+    networks:
+      - main-net
+    ports:
+      - "8089:8089"
+    environment:
+      - EUREKA_SERVER=http://discovery:8761/eureka
+      - JAEGER_AGENT_HOST=jaeger-agent
+      - DB_HOST=login_logout-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=database 
+    depends_on:
+      - discovery
+      - login_logout-db   
+
+
+  login_logout-db:
+    image: postgres
+    container_name: login_logout-db 
+    restart: on-failure
+    networks:
+      - main-net
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    ports:
+      - "5436:5432"
+    # volumes:
+    #   - ./logout/db:/docker-entrypoint-initdb.d
+      
+
   comments:
     build:
       context: ./comments
@@ -132,6 +191,33 @@ services:
       - POSTGRES_DB=database
     volumes:
       - ./comments/db:/docker-entrypoint-initdb.d
+
+  ml-db:
+   image: postgres:13.3-alpine
+   container_name: ml-db
+   restart: on-failure
+   networks:
+      - main-net
+   environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+   ports:
+      - "5432:5432"
+   volumes:
+      - ./dasboard/db:/docker-entrypoint-initdb.d
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    networks:
+      - main-net
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
   
   # movie-client:
   #   build: 

@@ -1,0 +1,15 @@
+{
+  "name": "sink-jdbc-postgres-03-json",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "topics": "predicted_normal_1",
+    "connection.url": "jdbc:postgresql://ml-db:5432/database",
+    "connection.user": "user",
+    "connection.password": "password",
+    "insert.mode": "insert",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "value.converter.schemas.enable": "true"
+  }
+}

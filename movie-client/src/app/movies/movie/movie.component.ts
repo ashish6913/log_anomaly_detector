@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RatingEditDialogComponent } from 'src/app/shared/components/rating-edit-dialog/rating-edit-dialog.component';
 import { first } from 'rxjs/operators';
 import { Comment } from "src/app/comment";
+import { TokenStorageService } from 'src/app/core/token-storage.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class MovieComponent implements OnInit {
   public currentRating: Rating;
   public commentsData: Array<Comment> = [];
   public currentCommentText: String;
+  public userVal: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,10 +38,12 @@ export class MovieComponent implements OnInit {
     private catalogService: CatalogService,
     private commentsService: CommentsService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private token : TokenStorageService) {
       
-    this.authenticated$ = authService.authenticated$;
-    this.userId = authService.userId;
+    this.authenticated$ = token.authenticated$;
+    //this.userVal=token.getUser().id;
+    this.userId = token.getUser().id;
     this.currentRating = new Rating();
     this.currentCommentText = '';
   }
@@ -83,7 +87,7 @@ export class MovieComponent implements OnInit {
   }
 
   postComment() {
-    this.commentsService.createComment(this.authService.userId, this.movie.id, this.currentCommentText).subscribe((response) => {
+    this.commentsService.createComment(this.userId, this.movie.id, this.currentCommentText).subscribe((response) => {
       console.log(response);
       this.snackBar.open("Posted your comment.", "", {
         duration: 2000,

