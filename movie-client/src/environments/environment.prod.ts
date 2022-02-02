@@ -17,12 +17,12 @@ export const environment = {
       scheduledDelayMillis: '5000', // The interval between two consecutive exports
       exportTimeoutMillis: '30000', // How long the export can run before it is cancelled
     },
-    // otelcolConfig: {
-    //  // url: 'http://otel2-collector-headless:4318/v1/traces'
-    //  url: '10.131.1.213:4318/v1/traces'
-    //   // url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
+    otelcolConfig: {
+     // url: 'http://otel2-collector-headless:4318/v1/traces'
+     url: '10.131.1.244:4317/v1/traces'
+      // url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
       
-    // },
+    },
     jaegerPropagatorConfig: {
       customHeader: 'custom-header',
     }

@@ -26,6 +26,12 @@ export const environment = {
     //   url: 'http://localhost:55681/v1/traces' //URL of opentelemetry collector
       
     // },
+    otelcolConfig: {
+      // url: 'http://otel2-collector-headless:4318/v1/traces'
+      url: '10.131.1.244:4317/v1/traces'
+       // url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
+       
+     },
     jaegerPropagatorConfig: {
       customHeader: 'custom-header',
     }
