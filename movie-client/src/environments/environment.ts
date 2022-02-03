@@ -27,7 +27,7 @@ export const environment = {
       
     // },
     otelcolConfig: {
-      url: 'http://otel-collector.lad-poc.svc.cluster.local:4317/v1/traces'
+      url: 'http://my-otelcol-collector:4317'
       // url: '10.131.0.59:4318'
        // url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
        
