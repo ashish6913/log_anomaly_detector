@@ -18,7 +18,7 @@ export const environment = {
       exportTimeoutMillis: '30000', // How long the export can run before it is cancelled
     },
     otelcolConfig: {
-     url: 'http://otel-collector-headless.lad-poc.svc.cluster.local:55681/v1/traces'
+     url: 'http://otel-collector-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/v1/traces'
     //  url: '10.131.0.59:4318'
       // url: '172.30.22.104:4317/v1/traces', //URL of opentelemetry collector
       
