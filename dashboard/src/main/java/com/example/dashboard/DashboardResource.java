@@ -70,7 +70,7 @@ public class DashboardResource {
 
             
             System.out.println("inside while loop");
-            //System.out.println(date_to_search2);
+            System.out.println(String.valueOf(from.substring(0,from.length()-2)+date_to_search));
             //String date_to_search2 = date_to_search + from.substring(2,);
           List<EntityModel<Dashboard>> predicted_values = repository.findDataByDate(String.valueOf(from.substring(0,from.length()-2)+date_to_search)).stream()
             .map(assembler::toModel)
