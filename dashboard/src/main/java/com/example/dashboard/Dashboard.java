@@ -16,13 +16,13 @@ public class Dashboard {
 
     @Id
     // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="spanId")
+    @Column(name="spanid")
     private String id;
 
-    @Column(name="userId")
+    @Column(name="userid")
     private String userId;
 
-    @Column(name="movieId")
+    @Column(name="movieid")
     private String movieId;
 
     @Column(name="comment")
