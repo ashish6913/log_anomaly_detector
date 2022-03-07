@@ -16,8 +16,9 @@ export class AdminBoardComponent implements OnInit {
     update_stacked_chart(start: string, end: string){
       this.start = start;
       this.end = end;
-      const api_url = 'http://localhost:8092/predicted_values/fromDate/' + start + '/toDate/' + end;
-      d3.json(api_url).then(data => this.process_log_data(data));
+      //const api_url = 'http://localhost:8092/predicted_values/fromDate/' + start + '/toDate/' + end;
+      //d3.json(api_url).then(data => this.process_log_data(data));
+      this.process_log_data('');
     }
 
     addDays(currentDate: Date) { 
@@ -38,7 +39,10 @@ export class AdminBoardComponent implements OnInit {
   };
 
     process_log_data(data: any): void {
-      const api_data = data['_embedded']['data']
+      //const api_data = data['_embedded']['data']
+
+      var api_data = [{"id":"E6IGswsM6pw=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-29"},{"id":"q8dA0JfFtoI=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-29"},{"id":"Fy5f7lw24kw=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-29"},{"id":"fLQ1U21foxo=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-28"},{"id":"IwnmAPhh1+Q=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"V6YMPu/Lbjo=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"GMBTn1FC3tE=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"4YYQKp7+BlM=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"ENwmAggM/dU=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"fKoSNvZrPWA=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"f8Sn51Vmd+g=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"lZZqdkRCa9c=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"wAaVFxiISxg=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-30"},{"id":"nHuVOZXBnEM=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-30"},{"id":"VkRPSVNlRZs=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"n9nXR3GA7gM=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"bpk6agC33p4=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"G/LIBio5xnE=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"QxhUaYZIKnA=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"9npy/qKpmxk=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"St9R8KlVAVY=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"}]
+      
       let dates_list = this.getDaysArray(new Date(this.start), new Date(this.end));
 
       interface log_values {
@@ -83,6 +87,7 @@ export class AdminBoardComponent implements OnInit {
     }
   
     createSvg(): void {
+      console.log("here")
       this.svg = d3.select("#my_dataviz")
       .append("svg")
       .attr("width", this.width + (this.margin * 2))
