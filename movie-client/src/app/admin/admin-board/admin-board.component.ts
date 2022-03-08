@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DiagConsoleLogger } from '@opentelemetry/api';
 import * as d3 from 'd3';
 import { StringifyOptions } from 'querystring';
 @Component({
@@ -17,9 +18,8 @@ export class AdminBoardComponent implements OnInit {
     update_stacked_chart(start: string, end: string){
       this.start = start;
       this.end = end;
-      //const api_url = 'http://localhost:8092/predicted_values/fromDate/' + start + '/toDate/' + end;
-      //d3.json(api_url).then(data => this.process_log_data(data));
-      this.process_log_data('');
+      const api_url = 'http://localhost:8092/predicted_values/fromDate/' + start + '/toDate/' + end;
+      d3.json(api_url).then(data => this.process_log_data(data));
     }
 
     addDays(currentDate: Date) { 
@@ -40,10 +40,7 @@ export class AdminBoardComponent implements OnInit {
   };
 
     process_log_data(data: any): void {
-      //const api_data = data['_embedded']['data']
-
-      var api_data = [{"id":"E6IGswsM6pw=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-29"},{"id":"q8dA0JfFtoI=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-29"},{"id":"Fy5f7lw24kw=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-29"},{"id":"fLQ1U21foxo=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-28"},{"id":"IwnmAPhh1+Q=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"V6YMPu/Lbjo=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"GMBTn1FC3tE=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"4YYQKp7+BlM=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-28"},{"id":"ENwmAggM/dU=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"fKoSNvZrPWA=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"f8Sn51Vmd+g=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"lZZqdkRCa9c=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-30"},{"id":"wAaVFxiISxg=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-30"},{"id":"nHuVOZXBnEM=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-30"},{"id":"VkRPSVNlRZs=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"n9nXR3GA7gM=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"bpk6agC33p4=","userId":"0","movieId":"1","comment":"select * from tablename where column=\\\\\"5\\\\\"","status":"anomolous","commentDate":"2021-10-31"},{"id":"G/LIBio5xnE=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"QxhUaYZIKnA=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"9npy/qKpmxk=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"},{"id":"St9R8KlVAVY=","userId":"0","movieId":"1","comment":"this wa an awesome movie.","status":"normal","commentDate":"2021-10-31"}]
-      
+      const api_data = data['_embedded']['data']      
       let dates_list = this.getDaysArray(new Date(this.start), new Date(this.end));
 
       interface log_values {
@@ -65,13 +62,8 @@ export class AdminBoardComponent implements OnInit {
         commentDate : string;
       }
 
-      // var comments_dictionary: { [id: string] : comment_values; } = {};
       var comments = [] as any;
 
-      // for (var date of dates_list) {
-      //   comments_dictionary[date] = {userId: "", movieId: "", comment: "", status: "", commentDate: "" };
-      // }
-      console.log(api_data)
       for (var log of api_data) {
       
         let date = log['commentDate'];
@@ -90,33 +82,25 @@ export class AdminBoardComponent implements OnInit {
         }
         
         comments.push({logId: String(log['id']), userId: String(userId), movieId: String(movieId), comment: String(comment), status: String(status), commentDate: String(commentDate) });
-
-        // comments_dictionary[date].userId = String(userId);
-        // comments_dictionary[date].movieId = String(movieId);
-        // comments_dictionary[date].comment = String(comment);
-        // comments_dictionary[date].status = String(status);
-        // comments_dictionary[date].commentDate = String(commentDate);
       }
       
-      console.log(dates_dictionary)
-      console.log(comments)
-      // console.log(comments_dictionary)
-      // let viz_data: { Date: string, Normal: string, Anomalous: string }[]
-      let viz_data: { Date: string, Normal: string, Anomalous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
+      // let viz_data: { Date: string, Normal: string, Anomalous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
+      let viz_data: { Date: string, Normal: string, Anomolous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
       viz_data = []
       
       for (let key in dates_dictionary) {
         let value = dates_dictionary[key];
-        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous, "commentData":[] as any};
+        // let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous, "commentData":[] as any};
+        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomolous": value.anomalous, "commentData":[] as any};
+
         for (let i=0; i<comments.length ; i++){
           let cvalue = comments[i];
           if (cvalue.commentDate == key){
-            data_for_one_day.commentData.push({"userId": cvalue.userId, "movieId": cvalue.movieId , "comment": cvalue.comment, "status": cvalue.status, "commentDate": cvalue.commentDate}); 
+            data_for_one_day.commentData.push({"logId": cvalue.logId, "userId": cvalue.userId, "movieId": cvalue.movieId , "comment": cvalue.comment, "status": cvalue.status, "commentDate": cvalue.commentDate}); 
           }   
         }
         viz_data.push(data_for_one_day);
       }
-      console.log(viz_data)
       d3.selectAll("svg").remove();
       d3.selectAll("figure").remove();
       this.createSvg();
@@ -130,7 +114,6 @@ export class AdminBoardComponent implements OnInit {
     }
   
     createSvg(): void {
-      console.log("here")
       this.svg = d3.select("#my_dataviz")
       .append("svg")
       .attr("width", this.width + (this.margin * 2))
@@ -144,7 +127,7 @@ export class AdminBoardComponent implements OnInit {
       // List of subgroups; i.e. the header of the csv data:
       // Prepare the array with the keys for stacking.
       const dataColumns = Object.keys(data[0]);
-      const subgroups = dataColumns.slice(1);
+      const subgroups = dataColumns.slice(1,3);
 
       // List of groups; i.e. value of the first
       // column - group - shown on the X axis.
@@ -185,12 +168,12 @@ export class AdminBoardComponent implements OnInit {
       .append("figure")
       .style("opacity", 0)
       .attr("class", "tooltip")
-      .style("background-color", "white")
       .style("border", "solid")
       .style("border-width", "1px")
       .style("border-radius", "5px")
       .style("padding", "10px")
-  
+      .style("margin-block-start", "5em")
+
       // Mouse function that change the tooltip when the user hovers/moves/leaves a cell.
       const mouseover = function(this: any, event: any, d: { data: { [x: string]: any; }; }) {
         /********** Hack! Otherwise, the following line would not work:
@@ -199,14 +182,27 @@ export class AdminBoardComponent implements OnInit {
         const subgroupName = subgroupNameObj.key;
         /************ End of Hack! ************/
         const subgroupValue = d.data[subgroupName];
-        tooltip.html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue)
-              .style("opacity", 1)   
+        const commentsData = d.data.commentData;
+
+        let commentStr = "";
+        let order=1;
+        let color = (subgroupName.toLowerCase() == "normal")?"#80b1d3":"#fb8072";
+        for (let i=1; i<=commentsData.length; i++){
+          if (commentsData[i-1].status == subgroupName.toLowerCase()){
+            commentStr += String(order) + ". Log ID: " + commentsData[i-1].logId + " User ID: " + commentsData[i-1].userId + " Movie ID: " + commentsData[i-1].movieId + " Comment: " + commentsData[i-1].comment + "<br>";
+            order++;
+          }
+        }
+        
+        tooltip.html("subgroup: " + (subgroupName.toLowerCase() == 'anomolous'?"Anomalous":"Normal") + "<br>" + "Value: " + subgroupValue + "<br>" + commentStr).style("opacity", 1).style("background-color", color)
+
       }
       const mousemove = function(event: any, d: any) {
         tooltip.style("transform", "translateY(-55%)")  
               .style("left", (event.x)/2+"px")
               .style("top", (event.y)/2-30+"px")
       }
+
       const mouseleave = function(event: any, d: any) {
         tooltip.style("opacity", 0)
       }
