@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import { StringifyOptions } from 'querystring';
 @Component({
   selector: 'app-admin-board',
   templateUrl: './admin-board.component.html',
@@ -49,31 +50,73 @@ export class AdminBoardComponent implements OnInit {
         normal: string;
         anomalous: string;
       }
-      var dates_dictionary: { [id: string] : log_values; } = {};
-      for (var date of dates_list) {
-        dates_dictionary[date] = { normal: "0", anomalous: "0" };
-      }
       
+      var dates_dictionary: { [id: string] : log_values; } = {};
+    
+      for (var date of dates_list) {
+        dates_dictionary[date] = { normal: "0", anomalous: "0"};
+      }
+
+      interface comment_values {
+        userId : string;
+        movieId : string;
+        comment : string;
+        status : string;
+        commentDate : string;
+      }
+
+      // var comments_dictionary: { [id: string] : comment_values; } = {};
+      var comments = [] as any;
+
+      // for (var date of dates_list) {
+      //   comments_dictionary[date] = {userId: "", movieId: "", comment: "", status: "", commentDate: "" };
+      // }
+      console.log(api_data)
       for (var log of api_data) {
+      
         let date = log['commentDate'];
-        
+
+        let userId = log['userId'];
+        let movieId = log['movieId'];
+        let comment = log['comment'];
+        let status = log['status'];
+        let commentDate = log['commentDate']
+
         if (log['status'] == "normal") {
           dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
         }
         else if (log['status'] == "anomolous") {
           dates_dictionary[date].anomalous = String(Number(dates_dictionary[date].anomalous) + 1);
         }
-      }
+        
+        comments.push({logId: String(log['id']), userId: String(userId), movieId: String(movieId), comment: String(comment), status: String(status), commentDate: String(commentDate) });
 
-      let viz_data: { Date: string, Normal: string, Anomalous: string }[]
+        // comments_dictionary[date].userId = String(userId);
+        // comments_dictionary[date].movieId = String(movieId);
+        // comments_dictionary[date].comment = String(comment);
+        // comments_dictionary[date].status = String(status);
+        // comments_dictionary[date].commentDate = String(commentDate);
+      }
+      
+      console.log(dates_dictionary)
+      console.log(comments)
+      // console.log(comments_dictionary)
+      // let viz_data: { Date: string, Normal: string, Anomalous: string }[]
+      let viz_data: { Date: string, Normal: string, Anomalous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
       viz_data = []
       
       for (let key in dates_dictionary) {
         let value = dates_dictionary[key];
-        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous};
+        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous, "commentData":[] as any};
+        for (let i=0; i<comments.length ; i++){
+          let cvalue = comments[i];
+          if (cvalue.commentDate == key){
+            data_for_one_day.commentData.push({"userId": cvalue.userId, "movieId": cvalue.movieId , "comment": cvalue.comment, "status": cvalue.status, "commentDate": cvalue.commentDate}); 
+          }   
+        }
         viz_data.push(data_for_one_day);
       }
-
+      console.log(viz_data)
       d3.selectAll("svg").remove();
       d3.selectAll("figure").remove();
       this.createSvg();
@@ -101,12 +144,12 @@ export class AdminBoardComponent implements OnInit {
       // List of subgroups; i.e. the header of the csv data:
       // Prepare the array with the keys for stacking.
       const dataColumns = Object.keys(data[0]);
-      const subgroups = dataColumns.slice(1)
-  
+      const subgroups = dataColumns.slice(1);
+
       // List of groups; i.e. value of the first
       // column - group - shown on the X axis.
       const groups = data.map((d: any) => d.Date);
-  
+
       // Create the X-axis band scale.
       const x = d3.scaleBand()
       .domain(groups)
@@ -157,7 +200,7 @@ export class AdminBoardComponent implements OnInit {
         /************ End of Hack! ************/
         const subgroupValue = d.data[subgroupName];
         tooltip.html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue)
-              .style("opacity", 1)        
+              .style("opacity", 1)   
       }
       const mousemove = function(event: any, d: any) {
         tooltip.style("transform", "translateY(-55%)")  
