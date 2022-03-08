@@ -38,38 +38,67 @@ export class AdminBoardComponent implements OnInit {
   };
 
     process_log_data(data: any): void {
-      const api_data = data['_embedded']['data']
+      const api_data = data['_embedded']['data']      
       let dates_list = this.getDaysArray(new Date(this.start), new Date(this.end));
 
       interface log_values {
         normal: string;
         anomalous: string;
       }
-      var dates_dictionary: { [id: string] : log_values; } = {};
-      for (var date of dates_list) {
-        dates_dictionary[date] = { normal: "0", anomalous: "0" };
-      }
       
+      var dates_dictionary: { [id: string] : log_values; } = {};
+    
+      for (var date of dates_list) {
+        dates_dictionary[date] = { normal: "0", anomalous: "0"};
+      }
+
+      interface comment_values {
+        userId : string;
+        movieId : string;
+        comment : string;
+        status : string;
+        commentDate : string;
+      }
+
+      var comments = [] as any;
+
       for (var log of api_data) {
+      
         let date = log['commentDate'];
-        
+
+        let userId = log['userId'];
+        let movieId = log['movieId'];
+        let comment = log['comment'];
+        let status = log['status'];
+        let commentDate = log['commentDate']
+
         if (log['status'] == "normal") {
           dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
         }
         else if (log['status'] == "anomolous") {
           dates_dictionary[date].anomalous = String(Number(dates_dictionary[date].anomalous) + 1);
         }
+        
+        comments.push({logId: String(log['id']), userId: String(userId), movieId: String(movieId), comment: String(comment), status: String(status), commentDate: String(commentDate) });
       }
-
-      let viz_data: { Date: string, Normal: string, Anomalous: string }[]
+      
+      // let viz_data: { Date: string, Normal: string, Anomalous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
+      let viz_data: { Date: string, Normal: string, Anomolous: string, commentData:{userId: string, movieId: string, comment: string, status: string, commentDate: string}}[]
       viz_data = []
       
       for (let key in dates_dictionary) {
         let value = dates_dictionary[key];
-        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous};
+        // let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomalous": value.anomalous, "commentData":[] as any};
+        let data_for_one_day = {"Date": key, "Normal": value.normal, "Anomolous": value.anomalous, "commentData":[] as any};
+
+        for (let i=0; i<comments.length ; i++){
+          let cvalue = comments[i];
+          if (cvalue.commentDate == key){
+            data_for_one_day.commentData.push({"logId": cvalue.logId, "userId": cvalue.userId, "movieId": cvalue.movieId , "comment": cvalue.comment, "status": cvalue.status, "commentDate": cvalue.commentDate}); 
+          }   
+        }
         viz_data.push(data_for_one_day);
       }
-
       d3.selectAll("svg").remove();
       d3.selectAll("figure").remove();
       this.createSvg();
@@ -96,12 +125,12 @@ export class AdminBoardComponent implements OnInit {
       // List of subgroups; i.e. the header of the csv data:
       // Prepare the array with the keys for stacking.
       const dataColumns = Object.keys(data[0]);
-      const subgroups = dataColumns.slice(1)
-  
+      const subgroups = dataColumns.slice(1,3);
+
       // List of groups; i.e. value of the first
       // column - group - shown on the X axis.
       const groups = data.map((d: any) => d.Date);
-  
+
       // Create the X-axis band scale.
       const x = d3.scaleBand()
       .domain(groups)
@@ -137,12 +166,12 @@ export class AdminBoardComponent implements OnInit {
       .append("figure")
       .style("opacity", 0)
       .attr("class", "tooltip")
-      .style("background-color", "white")
       .style("border", "solid")
       .style("border-width", "1px")
       .style("border-radius", "5px")
       .style("padding", "10px")
-  
+      .style("margin-block-start", "5em")
+
       // Mouse function that change the tooltip when the user hovers/moves/leaves a cell.
       const mouseover = function(this: any, event: any, d: { data: { [x: string]: any; }; }) {
         /********** Hack! Otherwise, the following line would not work:
@@ -151,14 +180,27 @@ export class AdminBoardComponent implements OnInit {
         const subgroupName = subgroupNameObj.key;
         /************ End of Hack! ************/
         const subgroupValue = d.data[subgroupName];
-        tooltip.html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue)
-              .style("opacity", 1)        
+        const commentsData = d.data.commentData;
+
+        let commentStr = "";
+        let order=1;
+        let color = (subgroupName.toLowerCase() == "normal")?"#80b1d3":"#fb8072";
+        for (let i=1; i<=commentsData.length; i++){
+          if (commentsData[i-1].status == subgroupName.toLowerCase()){
+            commentStr += String(order) + ". Log ID: " + commentsData[i-1].logId + " User ID: " + commentsData[i-1].userId + " Movie ID: " + commentsData[i-1].movieId + " Comment: " + commentsData[i-1].comment + "<br>";
+            order++;
+          }
+        }
+        
+        tooltip.html("subgroup: " + (subgroupName.toLowerCase() == 'anomolous'?"Anomalous":"Normal") + "<br>" + "Value: " + subgroupValue + "<br>" + commentStr).style("opacity", 1).style("background-color", color)
+
       }
       const mousemove = function(event: any, d: any) {
         tooltip.style("transform", "translateY(-55%)")  
               .style("left", (event.x)/2+"px")
               .style("top", (event.y)/2-30+"px")
       }
+
       const mouseleave = function(event: any, d: any) {
         tooltip.style("opacity", 0)
       }
