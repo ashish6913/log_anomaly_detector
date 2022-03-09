@@ -66,9 +66,13 @@ public class DashboardResource {
         while(start_date + i <= to_date){
 
             String date_to_search = String.valueOf(start_date + i);
+
             // int date_to_search2 = Integer.parseInt(from.substring(0,from.length()-2)+date_to_search );
 
-            
+            if(date_to_search.length() == 1){
+                date_to_search = "0"+date_to_search;
+
+            }
             System.out.println("inside while loop");
             System.out.println(String.valueOf(from.substring(0,from.length()-2)+date_to_search));
             //String date_to_search2 = date_to_search + from.substring(2,);
