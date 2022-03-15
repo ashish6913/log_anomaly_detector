@@ -47,11 +47,11 @@ export class AdminBoardComponent implements OnInit {
       }
       
       var dates_dictionary: { [id: string] : log_values; } = {};
-    
+      
       for (var date of dates_list) {
         dates_dictionary[date] = { normal: "0", anomalous: "0"};
       }
-
+      
       interface comment_values {
         userId : string;
         movieId : string;
@@ -73,12 +73,21 @@ export class AdminBoardComponent implements OnInit {
         let commentDate = log['commentDate']
 
         if (log['status'] == "normal") {
-          dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
+          if(dates_dictionary[date] == null){
+            continue
+          }
+          else{
+            dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
+          }
         }
         else if (log['status'] == "anomolous") {
-          dates_dictionary[date].anomalous = String(Number(dates_dictionary[date].anomalous) + 1);
+          if(dates_dictionary[date] == null){
+            continue
+          }
+          else{
+            dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
+          }
         }
-        
         comments.push({logId: String(log['id']), userId: String(userId), movieId: String(movieId), comment: String(comment), status: String(status), commentDate: String(commentDate) });
       }
       
@@ -119,7 +128,7 @@ export class AdminBoardComponent implements OnInit {
       .append("g")
       .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
     }
-  
+
     drawBars(data: any): void {
       
       // List of subgroups; i.e. the header of the csv data:
@@ -160,7 +169,7 @@ export class AdminBoardComponent implements OnInit {
       const stackedData = d3.stack()
       .keys(subgroups)
       (data);
-  
+      
       // Create a tooltip.
       const tooltip = d3.select("#my_dataviz")
       .append("figure")
@@ -170,7 +179,11 @@ export class AdminBoardComponent implements OnInit {
       .style("border-width", "1px")
       .style("border-radius", "5px")
       .style("padding", "10px")
-      .style("margin-block-start", "5em")
+      .style("overflow-y","auto")
+      .style("overflow-x","auto")
+      .style("width","1000px")
+      .style("height","100px")
+      .attr("viewBox", "0,0,1000,100")
 
       // Mouse function that change the tooltip when the user hovers/moves/leaves a cell.
       const mouseover = function(this: any, event: any, d: { data: { [x: string]: any; }; }) {
@@ -191,20 +204,23 @@ export class AdminBoardComponent implements OnInit {
             order++;
           }
         }
-        
-        tooltip.html("subgroup: " + (subgroupName.toLowerCase() == 'anomolous'?"Anomalous":"Normal") + "<br>" + "Value: " + subgroupValue + "<br>" + commentStr).style("opacity", 1).style("background-color", color)
+        tooltip.html('<div><button style="float:right">X</button>'  + "subgroup: " + (subgroupName.toLowerCase() == 'anomolous'?"Anomalous":"Normal") + "<br>" + "Value: " + subgroupValue + "<br>" + commentStr + "</div>").style("opacity", 1).style("background-color", color)
 
-      }
-      const mousemove = function(event: any, d: any) {
-        tooltip.style("transform", "translateY(-55%)")  
-              .style("left", (event.x)/2+"px")
-              .style("top", (event.y)/2-30+"px")
+        tooltip.select('button').on("click",function(){
+          tooltip.style("opacity",0);
+        });
       }
 
-      const mouseleave = function(event: any, d: any) {
-        tooltip.style("opacity", 0)
-      }
-  
+      // const mousemove = function(event: any, d: any) {
+      //   tooltip.style("transform", "translateY(-55%)")  
+      //         .style("left", (event.x)/2+"px")
+      //         .style("top", (event.y)/2-30+"px")
+      // }
+
+      // const mouseleave = function(event: any, d: any) {
+      //   tooltip.style("opacity", 0)
+      // }
+
       // Create and fill the stacked bars.
       this.svg.append("g")
       .selectAll("g")
@@ -219,8 +235,9 @@ export class AdminBoardComponent implements OnInit {
       .attr("height", (d: any) => y(d[0]) - y(d[1]))
       .attr("width", x.bandwidth())
       .attr("stroke", "grey")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
+      // .on("mouseover", mouseover)
+      .on("click", mouseover)
+      // .on("mousemove", mousemove)
+      // .on("mouseleave", mouseleave);
     }
   }
