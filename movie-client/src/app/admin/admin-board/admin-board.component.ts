@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+
 @Component({
   selector: 'app-admin-board',
   templateUrl: './admin-board.component.html',
@@ -40,6 +41,7 @@ export class AdminBoardComponent implements OnInit {
     process_log_data(data: any): void {
       const api_data = data['_embedded']['data']      
       let dates_list = this.getDaysArray(new Date(this.start), new Date(this.end));
+      console.log(dates_list);
 
       interface log_values {
         normal: string;
@@ -51,6 +53,7 @@ export class AdminBoardComponent implements OnInit {
       for (var date of dates_list) {
         dates_dictionary[date] = { normal: "0", anomalous: "0"};
       }
+      console.log(dates_dictionary);
       
       interface comment_values {
         userId : string;
