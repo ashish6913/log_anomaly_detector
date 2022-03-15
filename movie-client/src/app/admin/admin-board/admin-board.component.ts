@@ -21,9 +21,11 @@ export class AdminBoardComponent implements OnInit {
       console.log(api_url);
       d3.json(api_url).then(data => {
         if(data){
+          console.log("1");
           this.process_log_data(data);
         }else{
-          this.process_log_data([{}]);
+          console.log("2");
+          this.process_log_data([{"id":"test","userId":"0","movieId":"1","comment":"test","status":"normal","commentDate":"2022-03-01"}]);
         }
       });
     }
