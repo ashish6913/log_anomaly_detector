@@ -18,14 +18,10 @@ export class AdminBoardComponent implements OnInit {
       this.start = start;
       this.end = end;
       const api_url = 'http://dashboard-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/predicted_values/fromDate/' + start + '/toDate/' + end;
-      console.log(api_url);
       d3.json(api_url).then((data: any) => {
-        console.log(data);
         if(data["_embedded"] !== undefined){
-          console.log("1");
           this.process_log_data(data);
         }else{
-          console.log("2");
           this.process_log_data({"_embedded":{"data":[{"id":"test","userId":"0","movieId":"1","comment":"test","status":"normal","commentDate":"9999-12-31"}]},"_links":{"self":{"href":api_url}}});
         }
       });
@@ -50,9 +46,7 @@ export class AdminBoardComponent implements OnInit {
 
     process_log_data(data: any): void {
       const api_data = data['_embedded']['data']
-      console.log(api_data);
       let dates_list = this.getDaysArray(new Date(this.start), new Date(this.end));
-      console.log(dates_list);
 
       interface log_values {
         normal: string;
@@ -64,7 +58,6 @@ export class AdminBoardComponent implements OnInit {
       for (var date of dates_list) {
         dates_dictionary[date] = { normal: "0", anomalous: "0"};
       }
-      console.log(dates_dictionary);
       
       interface comment_values {
         userId : string;
