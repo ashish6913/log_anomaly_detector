@@ -20,7 +20,8 @@ export class AdminBoardComponent implements OnInit {
       const api_url = 'http://dashboard-lad-poc.apps.xnkpeyx0.canadacentral.aroapp.io/predicted_values/fromDate/' + start + '/toDate/' + end;
       console.log(api_url);
       d3.json(api_url).then(data => {
-        if(data){
+        console.log(data);
+        if(data ==  null){
           console.log("1");
           this.process_log_data(data);
         }else{
