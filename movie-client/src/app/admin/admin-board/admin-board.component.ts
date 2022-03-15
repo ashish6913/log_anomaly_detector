@@ -23,7 +23,7 @@ export class AdminBoardComponent implements OnInit {
         if(data){
           this.process_log_data(data);
         }else{
-          this.process_log_data({});
+          this.process_log_data([{}]);
         }
       });
     }
