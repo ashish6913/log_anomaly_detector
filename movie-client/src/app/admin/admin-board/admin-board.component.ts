@@ -21,7 +21,7 @@ export class AdminBoardComponent implements OnInit {
       console.log(api_url);
       d3.json(api_url).then(data => {
         console.log(data);
-        if(len(data.keys()) ==  1){
+        if(Object.keys(data).length ==  1){
           console.log("1");
           this.process_log_data(data);
         }else{
