@@ -21,7 +21,7 @@ export class AdminBoardComponent implements OnInit {
       console.log(api_url);
       d3.json(api_url).then(data => {
         console.log(data);
-        if(data.hasOwnProperty("_embedded")){
+        if(data["_embedded"] !== undefined){
           console.log("1");
           this.process_log_data(data);
         }else{
