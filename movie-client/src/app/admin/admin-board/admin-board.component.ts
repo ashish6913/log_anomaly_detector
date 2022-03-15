@@ -21,12 +21,12 @@ export class AdminBoardComponent implements OnInit {
       console.log(api_url);
       d3.json(api_url).then(data => {
         console.log(data);
-        if(data ==  null){
+        if(len(data.keys()) ==  1){
           console.log("1");
           this.process_log_data(data);
         }else{
           console.log("2");
-          this.process_log_data([{"id":"test","userId":"0","movieId":"1","comment":"test","status":"normal","commentDate":"2022-03-01"}]);
+          this.process_log_data({"_embedded":{"data":[{"id":"test","userId":"0","movieId":"1","comment":"test","status":"normal","commentDate":"9999-12-31"}]},"_links":{"self":{"href":api_url}}});
         }
       });
     }
