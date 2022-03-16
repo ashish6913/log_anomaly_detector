@@ -92,7 +92,7 @@ export class AdminBoardComponent implements OnInit {
             continue
           }
           else{
-            dates_dictionary[date].normal = String(Number(dates_dictionary[date].normal) + 1);
+            dates_dictionary[date].anomalous = String(Number(dates_dictionary[date].anomalous) + 1);
           }
         }
         comments.push({logId: String(log['id']), userId: String(userId), movieId: String(movieId), comment: String(comment), status: String(status), commentDate: String(commentDate) });
